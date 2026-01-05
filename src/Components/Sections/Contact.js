@@ -59,7 +59,7 @@ export default function Contact() {
       </div>
 
       <div className="relative max-w-2xl mx-auto">
-        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl">
+        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-2 md:p-10 shadow-2xl">
           <h2 className="text-4xl font-bold text-white text-center">Let’s Build Something</h2>
           <p className="text-gray-400 text-center mt-3">Job opportunity, collaboration, or a quick question — all welcome.</p>
 
