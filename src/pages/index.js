@@ -8,11 +8,11 @@ import Projects from "../components/Sections/Projects";
 import Blog from "../components/Sections/Blog";
 import Contact from "../components/Sections/Contact";
 // Layout
-import Footer from "../components/Layout/Footer";
+import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import Experiences from "../components/Sections/Experiance";
 
-
+import Certifications from "../components/Sections/Certifications";
 // Vanta
 import VantaNet from "../components/ui/VantaNet";
 
@@ -40,6 +40,12 @@ const Index = () => {
         {/* EXPERIENCES SECTION */}
         <Experiences />
       </section>
+  
+  <section id="certifications">
+        {/* CERTIFICATIONS SECTION */}  
+        <Certifications />
+      </section>
+
       <section id="projects">
         <Projects />
       </section>

@@ -1,244 +1,155 @@
-import { useState } from "react";
+"use client";
 
-export default function BlogUpload() {
-  const initialState = {
-    authorName: "",
-    role: "",
-    tech: "",
-    title: "",
-    excerpt: "",
-    content: "",
-    coverImage: "",
-  };
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-  const [form, setForm] = useState(initialState);
-  const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [status, setStatus] = useState("");
+const ALLOWED_TAGS = [
+  "react",
+  "nextjs",
+  "javascript",
+  "typescript",
+  "webdev",
+  "backend",
+  "node",
+  "ai",
+  "programming",
+];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+export default function TechBlogs() {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 🔥 Cloudinary Upload
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch(
+          "https://dev.to/api/articles?per_page=20&top=7"
+        );
 
-    setUploading(true);
-    try {
-      const data = new FormData();
-      data.append("file", file);
-      data.append(
-        "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-      );
+        const data = await res.json();
 
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: data,
+        if (!Array.isArray(data)) {
+          setBlogs([]);
+          return;
         }
-      );
 
-      const uploaded = await res.json();
+        // ✅ Filter by your tech stack
+        const filtered = data.filter((blog) =>
+          blog.tag_list?.some((tag) =>
+            ALLOWED_TAGS.includes(tag.toLowerCase())
+          )
+        );
 
-      setForm((prev) => ({
-        ...prev,
-        coverImage: uploaded.secure_url,
-      }));
-    } catch (err) {
-      console.error("Image upload failed", err);
-      setStatus("Image upload failed");
-    } finally {
-      setUploading(false);
-    }
-  };
+        // ✅ Sort by latest
+        const sorted = filtered.sort(
+          (a, b) => new Date(b.published_at) - new Date(a.published_at)
+        );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatus("");
+        // ✅ Show only top 6 latest
+        setBlogs(sorted.slice(0, 6));
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+        setBlogs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    try {
-      const res = await fetch("/api/blog", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setForm(initialState);
-      setStatus("Blog published successfully 🚀");
-      setTimeout(() => setStatus(""), 3000);
-    } catch (err) {
-      setStatus(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchBlogs();
+  }, []);
 
   return (
-    <section className="relative py-20 px-4 bg-gradient-to-br from-black via-zinc-900 to-black min-h-screen">
-      {/* Glow */}
-      <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-        <div className="w-80 h-80 bg-cyan-500/10 blur-[100px] rounded-full"></div>
-      </div>
-
-      <div className="relative max-w-2xl mx-auto">
-        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-6 md:p-8 shadow-2xl">
-          <h2 className="text-3xl font-bold text-white text-center">
-            Publish a Blog
-          </h2>
-          <p className="text-gray-400 text-center mt-2 text-sm">
-            Admin & Developers can share knowledge
-          </p>
-
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-            <input
-              type="text"
-              name="authorName"
-              value={form.authorName}
-              onChange={handleChange}
-              placeholder="Author Name"
-              required
-              className="custom-input"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                required
-                className="custom-input"
-              >
-                <option value="" disabled>Select Role</option>
-                <option value="Admin">Admin</option>
-                <option value="Developer">Developer</option>
-              </select>
-
-              <select
-                name="tech"
-                value={form.tech}
-                onChange={handleChange}
-                required
-                className="custom-input"
-              >
-                <option value="" disabled>Select Tech</option>
-                <option value="React">React</option>
-                <option value="Next.js">Next.js</option>
-                <option value="DSA">DSA</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="AI / ML">AI / ML</option>
-                <option value="Backend">Backend</option>
-              </select>
-            </div>
-
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              onChange={handleChange}
-              placeholder="Blog Title"
-              required
-              className="custom-input"
-            />
-
-            <textarea
-              name="excerpt"
-              rows="2"
-              value={form.excerpt}
-              onChange={handleChange}
-              placeholder="Short Excerpt"
-              required
-              minLength={20}
-              className="custom-input resize-none"
-            />
-
-            <textarea
-              name="content"
-              rows="6"
-              value={form.content}
-              onChange={handleChange}
-              placeholder="Write full blog content..."
-              required
-              minLength={100}
-              className="custom-input resize-none"
-            />
-
-            {/* 📸 Image Upload */}
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="custom-input"
-              />
-              {uploading && (
-                <p className="text-xs text-cyan-400 mt-1">Uploading image...</p>
-              )}
-              {form.coverImage && (
-                <img
-                  src={form.coverImage}
-                  alt="Preview"
-                  className="mt-3 rounded-lg max-h-40 object-cover"
-                />
-              )}
-            </div>
-
-            {status && (
-              <p
-                className={`text-sm text-center ${
-                  status.includes("successfully")
-                    ? "text-green-400"
-                    : "text-red-400"
-                }`}
-              >
-                {status}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading || uploading}
-              className="w-full py-2.5 rounded-md font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 transition disabled:opacity-50"
-            >
-              {loading ? "Publishing..." : "Publish Blog ✍️"}
-            </button>
-          </form>
-        </div>
-
-        <p className="text-center text-gray-500 text-xs mt-5">
-          © {new Date().getFullYear()} Adarsh Tiwari
+    <section
+      className="
+        min-h-screen py-24 px-6
+        bg-white/80 dark:bg-black/80
+      "
+    >
+      {/* Header */}
+      <div className="max-w-6xl mx-auto text-center">
+        <h1 className="text-4xl font-bold text-zinc-900 dark:text-white">
+          Latest Tech Blogs
+        </h1>
+        <p className="mt-3 text-zinc-600 dark:text-zinc-400">
+          Recently published articles related to modern web & software development
         </p>
       </div>
 
-      <style jsx>{`
-        .custom-input {
-          width: 100%;
-          padding: 0.65rem 0.9rem;
-          background: rgba(0, 0, 0, 0.45);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 0.45rem;
-          color: white;
-          font-size: 0.9rem;
-          outline: none;
-          transition: all 0.25s;
-        }
-        .custom-input:focus {
-          border-color: #22d3ee;
-          box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.35);
-        }
-        select option {
-          background: #18181b;
-          color: white;
-        }
-      `}</style>
+      {/* Grid */}
+      <div className="max-w-6xl mx-auto mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Loading */}
+        {loading &&
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-64 rounded-xl animate-pulse bg-zinc-200 dark:bg-zinc-800"
+            />
+          ))}
+
+        {/* Cards */}
+        {!loading &&
+          blogs.map((blog, i) => (
+            <motion.a
+              key={blog.id}
+              href={blog.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
+              viewport={{ once: true }}
+              className="
+                group rounded-2xl overflow-hidden
+                bg-white/80 dark:bg-white/5
+                border border-zinc-200 dark:border-white/10
+                backdrop-blur-xl
+                shadow-md hover:shadow-2xl
+                transition-all
+              "
+            >
+              {/* Image */}
+              <div className="h-44 overflow-hidden">
+                <img
+                  src={blog.cover_image || blog.social_image}
+                  alt={blog.title}
+                  className="
+                    h-full w-full object-cover
+                    transition-transform duration-700
+                    group-hover:scale-110
+                  "
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-5">
+                <span className="text-xs font-medium text-blue-600 dark:text-cyan-400">
+                  #{blog.tag_list?.[0]}
+                </span>
+
+                <h3 className="mt-2 font-semibold text-zinc-900 dark:text-white line-clamp-2">
+                  {blog.title}
+                </h3>
+
+                <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3">
+                  {blog.description}
+                </p>
+
+                <div className="mt-4 text-xs text-zinc-500 flex justify-between">
+                  <span>{blog.user?.name}</span>
+                  <span>
+                    {new Date(blog.published_at).toDateString()}
+                  </span>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+      </div>
+
+      {/* Footer */}
+      <p className="mt-20 text-center text-xs text-zinc-500">
+        Curated latest tech blogs • Built by Adarsh Tiwari
+      </p>
     </section>
   );
 }
