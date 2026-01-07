@@ -1,9 +1,9 @@
 export default function RingWaveLoader() {
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center  bg-black">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center  bg-gradient-to-br from-black via-blue-900 to-black">
    <h1
   className="
-    absolute top-50
+    absolute top-50 p-2
     text-4xl md:text-5xl
     font-extrabold tracking-wide
     bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600

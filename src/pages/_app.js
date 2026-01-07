@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import PageLoader from "../Components/Ui/PageLoader";
+import PageLoader from "../components/ui/PageLoader";
 import "../styles/globals.css";
 
-const MIN_LOADING_TIME = 4000; // 👈 1 second (adjust if needed)
+const MIN_LOADING_TIME = 2000; // 👈 2 seconds
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();

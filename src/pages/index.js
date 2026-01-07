@@ -1,48 +1,58 @@
+
 import React from "react";
 
 // Sections
-import Hero from "../Components/Sections/Hero";
-import About from "../Components/Sections/About";
-// import Skills from "../Components/Sections/Skills";
-import Projects from "../Components/Sections/Projects";
-import Blog from "../Components/Sections/Blog";
-import Contact from "../Components/Sections/Contact";
-import Footer from "../Components/Layout/Footer";
+import Hero from "../components/Sections/Hero";
+import About from "../components/Sections/About";
+import Projects from "../components/Sections/Projects";
+import Blog from "../components/Sections/Blog";
+import Contact from "../components/Sections/Contact";
+// Layout
+import Footer from "../components/Layout/Footer";
+import Header from "../components/layout/Header";
+import Experiences from "../components/Sections/Experiance";
+
+
+// Vanta
+import VantaNet from "../components/ui/VantaNet";
+
+
 const Index = () => {
   return (
-    <main className="bg-black text-white overflow-hidden">
-      
-      {/* HERO – First Impression */}
-      <Hero />
+    <main className=" text-white">
+      <Header />
 
-      {/* ABOUT – Who You Are */}
-      <section id="about">
-        <About />
+      {/* HERO SECTION */}
+      <section className="relative min-h-screen flex items-center">
+        <VantaNet className="absolute inset-0" />
+        <div className="relative z-10 w-full">
+          <Hero />
+        </div>
       </section>
 
-      {/* SKILLS – Tech Stack */}
-      {/* <section id="skills">
-        <Skills />
-      </section> */}
+  
 
-      {/* PROJECTS – Proof of Work */}
+      <section id="about">
+          <About />
+      </section>
+
+<section id="experiences">
+        {/* EXPERIENCES SECTION */}
+        <Experiences />
+      </section>
       <section id="projects">
         <Projects />
       </section>
 
-      {/* BLOG – Knowledge Sharing */}
       <section id="blog">
         <Blog />
       </section>
 
-      {/* CONTACT – Call to Action */}
       <section id="contact">
         <Contact />
       </section>
 
-      {/* FOOTER */}
       <Footer />
-
     </main>
   );
 };
