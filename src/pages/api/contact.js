@@ -1,6 +1,6 @@
 import { sendMail } from "../../lib/email";
 import dbConnect from "../../lib/dbConnect";
-import Contact from "../../Models/contact"; // Make sure this path is correct
+import Contact from "../../models/contact"; // Make sure this path is correct
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
