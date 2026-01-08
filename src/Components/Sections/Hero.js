@@ -3,7 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { MessageCircle, ArrowUp } from "lucide-react";
 
-const roles = ["Web Developer", "Freelancer"];
+const roles = [
+   "Full-Stack Developer (MERN & Next.js)",
+  "AI Agents Developer | LLM & Automation Engineer",
+  "Open Source Contributor & Tech Enthusiast",
+  " Designer of Intuitive Interfaces",
+  "Performance-First Web Architect",
+  "Cloud & DevOps Practitioner",
+  "Tech Blogger & Community Mentor",
+ 
+];
+
 
 export default function Hero() {
   const [text, setText] = useState("");
@@ -43,7 +53,7 @@ export default function Hero() {
   <div className="order-2 md:order-1 space-y-7 animate-fade-in-up">
     <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight">
       Hi, I’m <br />
-      <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+      <span className="bg-linear-to-r from-indigo-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
         Adarsh Tiwari
       </span>
     </h1>
@@ -98,7 +108,7 @@ export default function Hero() {
     <div className="relative w-72 h-72 md:w-80 md:h-80 flex items-center justify-center group">
 
       {/* Rotating Gradient Border */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-purple-600 animate-spin-slow opacity-75 group-hover:opacity-100 blur-sm"></div>
+      <div className="absolute inset-0 rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 to-purple-600 animate-spin-slow opacity-75 group-hover:opacity-100 blur-sm"></div>
 
       {/* Inner Scanner Ring */}
       <div className="absolute inset-1 rounded-full border-2 border-dashed border-indigo-300/50 animate-reverse-spin"></div>

@@ -8,13 +8,14 @@ const certifications = [
     title: "Postman API Fundamentals Student Expert",
     issuer: "Postman",
     period: "Sep 2025",
-    credentialUrl: "https://badgr.com/public/assertions/XXXX",
+    credentialUrl:
+      "https://badges.parchment.com/public/assertions/F3iXmUxiTpW73PrYmW2O6Q?identity__email=adarshtiwaridev01@gmail.com",
     points: [
       "Hands-on experience with REST APIs and API testing",
       "Worked with collections, environments, and automation",
     ],
     tech: ["Postman", "REST API", "API Testing"],
-    logo: "/images/certifications/postman.png",
+    logo: "/certifications/postman.png",
   },
   {
     title: "Deloitte Australia – Technology Job Simulation",
@@ -26,7 +27,7 @@ const certifications = [
       "Practiced requirement analysis and solution design",
     ],
     tech: ["Software Development", "Problem Solving"],
-    logo: "/images/certifications/forage.png",
+    logo: "/certifications/forage.png",
   },
   {
     title: "Electronic Arts – Software Engineering Simulation",
@@ -37,23 +38,35 @@ const certifications = [
       "Simulated real software engineering workflows",
       "Focused on teamwork and engineering best practices",
     ],
-    tech: ["Software Engineering", "Team Leadership"],
-    logo: "/images/certifications/ea.png",
+    tech: ["Software Engineering", "Team Collaboration"],
+    logo: "/certifications/ea.png",
   },
   {
-    title: "Data Analytics with Python",
-    issuer: "NPTEL",
-    period: "May 2025",
-    credentialUrl:
-      "https://nptel.ac.in/noc/E_Certificate/NPTEL25CS17S1253704421",
+    title: "Software Development Intern – GNB",
+    issuer: "GNB Technologies",
+    period: "Aug 2025 – Nov 2025",
+    credentialUrl: "/certificates/gnb-internship-letter.pdf", // local or hosted PDF
     points: [
-      "Worked with real datasets using Python",
-      "Applied data cleaning and statistical analysis",
+      "Worked on real-world web development tasks",
+      "Collaborated with senior developers on live projects",
     ],
-    tech: ["Python", "Data Analysis", "Statistics"],
-    logo: "/images/certifications/nptel.png",
+    tech: ["HTML", "CSS", "JavaScript", "React"],
+    logo: "/certifications/gnb.png",
+  },
+  {
+    title: "Frontend Developer Intern",
+    issuer: "IBM",
+    period: "Jun 2024 – Aug 2024",
+    credentialUrl: "/certificates/ibm-internship-certificate.pdf", // update if public link exists
+    points: [
+      "Built responsive UI components using modern frontend tools",
+      "Improved accessibility and performance of web interfaces",
+    ],
+    tech: ["React", "JavaScript", "UI/UX", "Web Performance"],
+    logo: "/certifications/ibm.png",
   },
 ];
+
 
 
 export default function Certifications() {
@@ -72,7 +85,7 @@ export default function Certifications() {
       ref={ref}
       className="
         py-44 px-6
-        bg-gradient-to-b from-white via-zinc-50 to-white
+        bg-linear-to-b from-white via-zinc-50 to-white
         dark:from-black dark:via-zinc-900 dark:to-black
       "
     >
@@ -80,11 +93,11 @@ export default function Certifications() {
         Certifications
       </h2>
 
-      <div className="relative max-w-[1200px] mx-auto">
+      <div className="relative max-w-300 mx-auto">
 
         {/* TIMELINE */}
         <svg
-          className="hidden lg:block absolute left-1/2 top-10 -translate-x-1/2 h-[1600px]"
+          className="hidden lg:block absolute left-1/2 top-10 -translate-x-1/2 h-400"
           width="180"
           viewBox="0 0 180 1600"
         >
@@ -154,9 +167,9 @@ export default function Certifications() {
       <Image
         src={cert.logo}
         alt={cert.issuer}
-        width={42}
-        height={42}
-        className="object-contain"
+        width={26}
+        height={28}
+        className="object-cover rounded-full h-12 w-12"
       />
 
       <p className="text-xs uppercase tracking-widest text-zinc-400">
@@ -173,7 +186,7 @@ export default function Certifications() {
     <p
       className="
         mt-1 font-medium
-        bg-gradient-to-r from-indigo-600 to-violet-600
+        bg-linear-to-r from-indigo-600 to-violet-600
         bg-clip-text text-transparent
       "
     >

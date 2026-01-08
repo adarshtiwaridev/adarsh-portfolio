@@ -6,7 +6,7 @@ export default function Footer() {
       className="
         mt-24 border-t
         border-zinc-200 dark:border-white/10
-        bg-gradient-to-b
+        bg-linear-to-b
         from-white via-zinc-50 to-white
         dark:from-black dark:via-zinc-950 dark:to-black
       "
@@ -35,9 +35,9 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               {[
                 ["About", "#about"],
-                ["Experience", "#experience"],
+                ["Experience", "#experiences"],
                 ["Projects", "#projects"],
-                ["Skills", "#skills"],
+                ["Skills", "#about"],
                 ["Contact", "#contact"],
               ].map(([label, link]) => (
                 <li key={label}>
@@ -65,14 +65,14 @@ export default function Footer() {
 
             <div className="mt-4 flex gap-4 text-sm">
               <a
-                href="https://github.com/adarsh2027dev"
+                href="https://github.com/adarshtiwaridev"
                 target="_blank"
                 className="hover:text-blue-600 dark:hover:text-cyan-400 transition"
               >
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/adarsh2027dev"
+                href="https://linkedin.com/in/adarshtiwaridev"
                 target="_blank"
                 className="hover:text-blue-600 dark:hover:text-cyan-400 transition"
               >

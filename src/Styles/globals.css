@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
-@variant dark (.dark &);
-
 body {
   @apply bg-white text-zinc-900 dark:bg-black dark:text-zinc-100;
 }
@@ -143,4 +139,35 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+
+
+/* Custom scrollbar styles */
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); opacity: .6; }
+  50% { transform: translateY(-12px); opacity: 1; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 18s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
 }
