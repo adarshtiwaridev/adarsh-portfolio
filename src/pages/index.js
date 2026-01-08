@@ -20,12 +20,12 @@ const Index = () => {
   return (
 
     
-    <main className=" text-white">
+    <main>
       <Header />
       
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative min-h-screen flex items-center bg-white dark:bg-black">
         <VantaNet className="absolute inset-0" />
         <div className="relative z-10 w-full">
           <Hero />

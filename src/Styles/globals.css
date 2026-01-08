@@ -4,6 +4,10 @@
 @import "tailwindcss";
 
 
+@custom-variant dark (&:is(.dark *));
+
+@variant dark (.dark &);
+
 /* =========================================================
    Base Body Styles
    ========================================================= */

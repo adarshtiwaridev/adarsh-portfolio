@@ -7,15 +7,20 @@ const navItems = ["Home", "Blog", "About", "Projects", "Contact"];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
   const [mounted, setMounted] = useState(false);
 
-  // Load theme from localStorage
+  // Load theme from localStorage or default to dark
   useEffect(() => {
     const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
+    if (theme === "light") {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark");
+    } else {
+      // Default to dark mode if no preference or explicitly set to dark
       setDarkMode(true);
       document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
     setMounted(true);
   }, []);
@@ -63,14 +68,18 @@ export default function Header() {
           {/* Dark Mode Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="w-12 h-6 rounded-full bg-zinc-300 dark:bg-zinc-700 px- flex items-center transition-colors"
+            className="relative w-12 h-7 rounded-full border-2 border-white bg-zinc-300 dark:bg-zinc-700 flex items-center transition-colors duration-300"
           >
             <span
-              className={`w-6 h-6 bg-white text-blue-600 rounded-full flex items-center justify-center transition-transform duration-300 ${
-                darkMode ? "translate-x-[1.5rem]" : ""
+              className={`w-5 h-5 bg-white border-2 border-white  dark:bg-zinc-800 rounded-full flex items-center justify-center transition-transform duration-300 shadow-sm ${
+                darkMode ? "translate-x-6" : "translate-x-0.5"
               }`}
             >
-              {darkMode ? <Moon size={12} /> : <Sun size={12} />}
+              {darkMode ? (
+                <Moon size={12} className="text-zinc-400" />
+              ) : (
+                <Sun size={12} className="text-yellow-500" />
+              )}
             </span>
           </button>
 
