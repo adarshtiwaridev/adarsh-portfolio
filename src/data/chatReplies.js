@@ -69,7 +69,7 @@ const chatReplies = [
     reply:
       "🎨 EmbProto Internship:\n" +
       "Resolved 30+ UI bugs, enhanced responsiveness across devices, and reduced post-release hotfixes by ~20%.",
-    suggestions: ["View Projects", "Contact Adarsh"],
+    suggestions: ["View Projects", "Contact"],
   },
 
   // ================= PROJECTS =================

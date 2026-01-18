@@ -66,7 +66,7 @@ export default function App({ Component, pageProps }) {
 
   {/* ✅ FAVICON (CORRECT WAY) */}
   <link rel="icon" href="/favicon.ico" />
-  <link rel="icon" type="image/png" href="/favicon.jpg" />
+  <link rel="icon" type="image/png" href="/favicon.jpg" className="w-10 h-10 rounded-full" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   {/* Canonical */}
