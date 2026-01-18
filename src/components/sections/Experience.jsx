@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ImageOff } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
 

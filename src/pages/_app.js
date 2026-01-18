@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import PageLoader from "../components/ui/PageLoader";
 import "../Styles/globals.css";
+import Chatbot from "../components/sections/Chatbot";
 
 const MIN_LOADING_TIME = 2000; // 2 sec (SEO + UX friendly)
 
@@ -106,6 +107,7 @@ export default function App({ Component, pageProps }) {
 
       {loading && <PageLoader />}
       <Component {...pageProps} />
+      <Chatbot />
     </>
   );
 }

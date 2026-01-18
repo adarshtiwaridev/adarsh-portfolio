@@ -6,7 +6,7 @@ import Blog from "../components/sections/Blog";
 import Contact from "../components/sections/Contact";
 import Experiences from "../components/sections/Experience";
 import Certifications from "../components/sections/Certifications";
-
+import Chatbot from "../components/sections/Chatbot";
 // Layout
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
@@ -30,6 +30,12 @@ const Index = () => {
         <div className="relative z-10 w-full">
           <Hero />
         </div>
+      </section>
+
+      
+
+      <section id="chatbot">  
+        <Chatbot />
       </section>
 
   

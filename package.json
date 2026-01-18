@@ -19,6 +19,7 @@
     "mongoose": "^9.1.2",
     "next": "^16.1.1",
     "nodemailer": "^7.0.12",
+    "openai": "^6.16.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwind-merge": "^3.4.0",

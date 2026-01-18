@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { MessageCircle, ArrowUp } from "lucide-react";
-
+import Chatbot from "../sections/Chatbot";
 const roles = [
    "Full-Stack Developer (MERN & Next.js)",
   "AI Agents Developer | LLM & Automation Engineer",
@@ -138,13 +138,7 @@ export default function Hero() {
         <ArrowUp />
       </button>
 
-      {/* CHATBOT ICON */}
-      <button
-        className="fixed bottom-6 right-6 w-14 h-14 z-99 rounded-full bg-indigo-500 text-white flex items-center justify-center shadow-xl hover:scale-110 transition animate-bounce"
-        title="Chat"
-      >
-        <MessageCircle />
-      </button>
+    
     </section>
   );
 }
