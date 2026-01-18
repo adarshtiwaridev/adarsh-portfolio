@@ -117,7 +117,7 @@ const Chatbot = () => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-neutral-800 dark:text-white">
-                    Adarsh AI
+                    Adarsh   Tiwari
                   </p>
                   <p className="text-xs text-neutral-500">
                     Portfolio Assistant
@@ -239,4 +239,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-    
