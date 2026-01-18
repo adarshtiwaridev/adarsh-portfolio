@@ -46,64 +46,49 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       {/* 🔥 GLOBAL SEO (Pages Router correct way) */}
-      <Head>
-        <title>
-          Adarshtiwaridev | Adarsh Tiwari – Full Stack Developer & Software Engineer
-        </title>
-
-        <meta
-          name="description"
-          content="Adarshtiwaridev is the official portfolio of Adarsh Tiwari, a Full Stack Developer and Software Engineer specializing in Next.js, React, Node.js, scalable web applications, and modern cloud-ready solutions."
-        />
-        <Head>
+    <Head>
   <title>
     Adarshtiwaridev | Adarsh Tiwari – Full Stack Developer & Software Engineer
   </title>
 
   <meta
     name="description"
-    content="Adarshtiwaridev is the official portfolio of Adarsh Tiwari, a Full Stack Developer."
+    content="Adarshtiwaridev is the official portfolio of Adarsh Tiwari, a Full Stack Developer and Software Engineer specializing in Next.js, React, and scalable web applications."
   />
 
-  <link rel="icon" href="../favicon.ico" sizes="any" />
-  <link rel="apple-touch-icon" href="/favicon.png" />
+  <meta
+    name="keywords"
+    content="Adarshtiwaridev, Adarsh Tiwari, Full Stack Developer, Software Engineer, Next.js Developer, React Developer"
+  />
+
+  <meta name="author" content="Adarsh Tiwari" />
+  <meta name="robots" content="index, follow" />
+
+  {/* ✅ FAVICON (CORRECT WAY) */}
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon.jpg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  {/* Canonical */}
+  <link rel="canonical" href="https://www.adarshtiwaridev.com" />
+
+  {/* Open Graph */}
+  <meta property="og:title" content="Adarshtiwaridev | Adarsh Tiwari" />
+  <meta
+    property="og:description"
+    content="Professional portfolio of Adarsh Tiwari showcasing modern full stack projects."
+  />
+  <meta property="og:url" content="https://www.adarshtiwaridev.com" />
+  <meta property="og:type" content="website" />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Adarshtiwaridev | Adarsh Tiwari" />
+  <meta
+    name="twitter:description"
+    content="Official portfolio of Adarsh Tiwari, Full Stack Developer."
+  />
 </Head>
-
-
-        <meta
-          name="keywords"
-          content="Adarshtiwaridev, Adarsh Tiwari, Full Stack Developer, Software Engineer, Next.js Developer, React Developer, JavaScript Developer, Web Developer Portfolio, Modern Web Development"
-        />
-
-        <meta name="author" content="Adarsh Tiwari" />
-
-        {/* Canonical */}
-        <link rel="canonical" href="https://www.adarshtiwaridev.com" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="Adarshtiwaridev | Adarsh Tiwari" />
-        <meta
-          property="og:description"
-          content="Professional portfolio of Adarsh Tiwari showcasing modern full stack development projects."
-        />
-        <meta property="og:url" content="https://www.adarshtiwaridev.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Adarshtiwaridev" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Adarshtiwaridev | Adarsh Tiwari"
-        />
-        <meta
-          name="twitter:description"
-          content="Official portfolio of Adarsh Tiwari, Full Stack Developer."
-        />
-
-        {/* Robots */}
-        <meta name="robots" content="index, follow" />
-      </Head>
 
       {loading && <PageLoader />}
       <Component {...pageProps} />

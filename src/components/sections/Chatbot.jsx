@@ -16,24 +16,21 @@ const Chatbot = () => {
     },
   ]);
 
-  const [suggestions, setSuggestions] = useState([
-    "Who is Adarsh?",
-    "What skills do you have?",
-    "Show me your projects",
-    "How can I contact you?",
-  ]);
-
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+  }, [open]);
+
   const sendMessage = async (text) => {
     if (!text.trim() || loading) return;
 
-    const newMessages = [...messages, { role: "user", content: text }];
-    setMessages(newMessages);
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
     setInput("");
     setLoading(true);
 
@@ -41,7 +38,7 @@ const Chatbot = () => {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages }),
       });
 
       const data = await res.json();
@@ -50,80 +47,87 @@ const Chatbot = () => {
         ...prev,
         { role: "assistant", content: data.reply },
       ]);
-
-      setSuggestions(data.suggestions || []);
-    } catch (error) {
+    } catch {
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content:
-            "I’m not sure about that. Please connect with the admin.",
-        },
+        { role: "assistant", content: "Please contact Adarsh directly." },
       ]);
-      setSuggestions(["How can I contact you?"]);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input);
+    }
+  };
+
   return (
     <>
-      {/* Floating Button */}
+       {/* Floating Button */}
       <button
         onClick={() => setOpen((p) => !p)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full
-        bg-gradient-to-tr from-indigo-500 to-purple-600 text-white
-        shadow-xl flex items-center justify-center hover:scale-110 transition"
+        className="
+          fixed bottom-6 right-6 z-50
+          w-14 h-14 rounded-full
+          bg-gradient-to-tr from-indigo-500 to-purple-600
+          text-white shadow-2xl
+          flex items-center justify-center
+          hover:scale-110 transition
+        "
       >
         <MessageCircle />
       </button>
 
-      {/* Chat Modal */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[360px]">
-          <div className="rounded-2xl overflow-hidden bg-white dark:bg-neutral-900
-            border dark:border-neutral-800 shadow-2xl flex flex-col">
-
+        <div className="fixed bottom-24 right-6 z-50 w-[380px]">
+          <div
+            className="rounded-3xl overflow-hidden
+            bg-white dark:bg-neutral-900
+            border border-neutral-200 dark:border-neutral-800
+            shadow-2xl flex flex-col"
+          >
             {/* Header */}
             <div className="px-4 py-3 border-b dark:border-neutral-800 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-indigo-500 text-white text-sm flex items-center justify-center font-semibold">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-full bg-indigo-500 text-white text-xs flex items-center justify-center">
                   AI
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold">Adarsh AI</h3>
-                  <p className="text-xs text-neutral-500">
-                    Portfolio Assistant
+                  <p className="text-sm font-semibold text-neutral-800 dark:text-white">
+                    Adarsh AI
                   </p>
+                  <p className="text-xs text-neutral-500">Portfolio Assistant</p>
                 </div>
               </div>
-              <button onClick={() => setOpen(false)}>✕</button>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-neutral-500 hover:text-black dark:hover:text-white"
+              >
+                ✕
+              </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 space-y-4 overflow-y-auto max-h-[320px] scrollbar-hide">
+            <div
+              className="flex-1 p-4 space-y-4 overflow-y-auto max-h-[330px]
+              no-scrollbar"
+            >
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex gap-2 ${
-                    msg.role === "user"
-                      ? "justify-end"
-                      : "justify-start"
+                  className={`flex ${
+                    msg.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {msg.role === "assistant" && (
-                    <div className="w-7 h-7 rounded-full bg-indigo-500 text-white text-xs flex items-center justify-center">
-                      AI
-                    </div>
-                  )}
-
                   <div
                     className={`px-4 py-2 rounded-2xl text-sm max-w-[75%]
                     ${
                       msg.role === "user"
-                        ? "bg-black text-white dark:bg-white dark:text-black"
-                        : "bg-neutral-100 dark:bg-neutral-800"
+                        ? "bg-indigo-600 text-white"
+                        : "bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100"
                     }`}
                   >
                     {msg.content}
@@ -131,57 +135,42 @@ const Chatbot = () => {
                 </div>
               ))}
 
-              {/* Typing indicator */}
               {loading && (
-                <div className="flex items-center gap-2 text-xs text-neutral-500">
-                  <div className="w-7 h-7 rounded-full bg-indigo-500 text-white text-xs flex items-center justify-center">
-                    AI
-                  </div>
-                  <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse"></span>
-                    <span className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse delay-150"></span>
-                    <span className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse delay-300"></span>
-                  </div>
-                </div>
+                <p className="text-xs text-neutral-400">AI is typing…</p>
               )}
 
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Suggestions */}
-            {suggestions.length > 0 && (
-              <div className="px-4 pb-2 flex flex-wrap gap-2">
-                {suggestions.map((q, i) => (
-                  <button
-                    key={i}
-                    onClick={() => sendMessage(q)}
-                    className="text-xs px-3 py-1 rounded-full
-                    bg-neutral-200 dark:bg-neutral-700
-                    hover:bg-black hover:text-white transition"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Input */}
-            <div className="p-3 border-t dark:border-neutral-800 flex gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask something…"
-                className="flex-1 px-3 py-2 text-sm rounded-lg
-                border dark:border-neutral-700 bg-transparent outline-none"
-              />
-              <button
-                onClick={() => sendMessage(input)}
-                disabled={loading}
-                className="p-2 rounded-lg bg-black text-white
-                dark:bg-white dark:text-black"
+            {/* Input + Send Button */}
+            <div className="p-3 border-t dark:border-neutral-800">
+              <div
+                className="flex items-center gap-2 px-3 py-2 rounded-full
+                bg-neutral-100 dark:bg-neutral-800
+                border border-neutral-300 dark:border-neutral-700
+                focus-within:ring-2 focus-within:ring-indigo-500 transition"
               >
-                <Send size={16} />
-              </button>
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Type message & press Enter…"
+                  className="flex-1 text-sm bg-transparent outline-none
+                  text-neutral-800 dark:text-white"
+                />
+
+                <button
+                  onClick={() => sendMessage(input)}
+                  disabled={loading}
+                  className="w-9 h-9 rounded-full
+                  bg-gradient-to-tr from-indigo-500 to-purple-600
+                  text-white flex items-center justify-center
+                  hover:scale-105 active:scale-95 transition"
+                >
+                  <Send size={15} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
